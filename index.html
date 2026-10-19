@@ -18,35 +18,42 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
-        /* Başlangıç Tıkla Butonu */
+        /* Giriş Butonu Animasyonu */
         .btn-tikla {
             position: relative;
             z-index: 10;
-            background-color: #ff4757;
+            background: linear-gradient(45deg, #ff4757, #ff6b81);
             color: white;
-            font-size: 28px;
+            font-size: 30px;
             font-weight: bold;
-            padding: 18px 50px;
+            padding: 20px 60px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 5px 20px rgba(255, 71, 87, 0.6);
-            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 0 25px rgba(255, 71, 87, 0.7);
+            animation: pulseGlow 2s infinite;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .btn-tikla:hover {
-            background-color: #e84118;
-            transform: scale(1.08);
+            transform: scale(1.1) rotate(-1deg);
+            box-shadow: 0 0 40px rgba(255, 71, 87, 1);
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 15px rgba(255, 71, 87, 0.5); }
+            50% { box-shadow: 0 0 35px rgba(255, 71, 87, 0.9); }
+            100% { box-shadow: 0 0 15px rgba(255, 71, 87, 0.5); }
         }
 
         .hidden {
             display: none !important;
         }
 
-        /* Arkaplan Video Ayarları */
+        /* Arkaplan Videosu */
         #bgVideo {
             position: fixed;
             right: 0;
@@ -56,45 +63,66 @@
             width: auto;
             height: auto;
             z-index: 1;
-            object-fit: cover; /* Ekranı tam kaplaması için */
+            object-fit: cover;
         }
 
-        /* Videonun üzerindeki karartma katmanı (Yazıların okunması için) */
+        /* Karartma Katmanı */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.55);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 2;
+            backdrop-filter: blur(3px);
         }
 
-        /* Video Üstündeki Yazı Alanı */
+        /* İçerik Alanı & Giriş Animasyonu */
         .content-container {
             position: relative;
             z-index: 3;
             text-align: center;
             color: #ffffff;
-            padding: 30px;
-            max-width: 600px;
+            padding: 35px;
+            max-width: 550px;
             width: 90%;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(5px);
-            border-radius: 20px;
+            background: rgba(20, 20, 20, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            max-height: 90vh;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+            max-height: 85vh;
             overflow-y: auto;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .main-title {
-            font-size: 36px;
-            margin-bottom: 20px;
+            font-size: 40px;
+            margin-bottom: 25px;
             text-transform: uppercase;
             letter-spacing: 3px;
-            color: #ff4757;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            background: linear-gradient(45deg, #ff4757, #ffa502, #ff6b81);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            animation: titleBounce 3s ease-in-out infinite;
+        }
+
+        @keyframes titleBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         .word-list {
@@ -104,16 +132,75 @@
         }
 
         .word-list li {
-            font-size: 22px;
+            font-size: 20px;
             padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             font-weight: 600;
             letter-spacing: 1px;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.9);
+            color: #f1f2f6;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideInLeft 0.5s forwards;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .word-list li:hover {
+            color: #ff4757;
+            transform: scale(1.05) translateX(5px);
+        }
+
+        /* Liste elemanları sırayla gelsin diye gecikmeler (stagger) */
+        .word-list li:nth-child(1)  { animation-delay: 0.1s; }
+        .word-list li:nth-child(2)  { animation-delay: 0.15s; }
+        .word-list li:nth-child(3)  { animation-delay: 0.2s; }
+        .word-list li:nth-child(4)  { animation-delay: 0.25s; }
+        .word-list li:nth-child(5)  { animation-delay: 0.3s; }
+        .word-list li:nth-child(6)  { animation-delay: 0.35s; }
+        .word-list li:nth-child(7)  { animation-delay: 0.4s; }
+        .word-list li:nth-child(8)  { animation-delay: 0.45s; }
+        .word-list li:nth-child(9)  { animation-delay: 0.5s; }
+        .word-list li:nth-child(10) { animation-delay: 0.55s; }
+        .word-list li:nth-child(11) { animation-delay: 0.6s; }
+        .word-list li:nth-child(12) { animation-delay: 0.65s; }
+        .word-list li:nth-child(13) { animation-delay: 0.7s; }
+        .word-list li:nth-child(14) { animation-delay: 0.75s; }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .word-list li:last-child {
             border-bottom: none;
+        }
+
+        /* Ses Kontrol Butonu */
+        .sound-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: background 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sound-btn:hover {
+            background: rgba(255, 71, 87, 0.8);
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -122,13 +209,18 @@
     <!-- Başlangıç Butonu -->
     <button id="tiklaBtn" class="btn-tikla" onclick="icerikGoster()">Tıkla</button>
 
-    <!-- Arkaplan Videosu (loop ekli) -->
+    <!-- Arkaplan Videosu -->
     <video id="bgVideo" class="hidden" loop preload="auto">
         <source src="video.mp4" type="video/mp4">
         Tarayıcınız video etiketini desteklemiyor.
     </video>
 
-    <!-- Videonun Üstüne Gelecek Karartma ve Yazı Katmanı -->
+    <!-- Ses Kapatma / Açma Tuşu (Başlangıçta gizli) -->
+    <button id="soundBtn" class="sound-btn hidden" onclick="sesiDegistir()">
+        <span id="soundIcon">🔊</span> <span id="soundText">Sesi Kapat</span>
+    </button>
+
+    <!-- Yazı Alanı -->
     <div id="icerikAlani" class="hidden">
         <div class="overlay"></div>
         <div class="content-container">
@@ -158,17 +250,36 @@
             // Butonu gizle
             document.getElementById('tiklaBtn').classList.add('hidden');
 
-            // Videoyu ve Yazı Alanını Göster
+            // Video, içerik ve ses kontrol butonunu göster
             var video = document.getElementById('bgVideo');
             var icerik = document.getElementById('icerikAlani');
+            var soundBtn = document.getElementById('soundBtn');
 
             video.classList.remove('hidden');
             icerik.classList.remove('hidden');
+            soundBtn.classList.remove('hidden');
 
-            // Videoyu sesli ve döngüsel başlat
+            // Videoyu sesli ve döngüde başlat
+            video.muted = false;
             video.play().catch(function(error) {
                 console.log("Video başlatılamadı: ", error);
             });
+        }
+
+        function sesiDegistir() {
+            var video = document.getElementById('bgVideo');
+            var soundIcon = document.getElementById('soundIcon');
+            var soundText = document.getElementById('soundText');
+
+            if (video.muted) {
+                video.muted = false;
+                soundIcon.innerText = "🔊";
+                soundText.innerText = "Sesi Kapat";
+            } else {
+                video.muted = true;
+                soundIcon.innerText = "🔇";
+                soundText.innerText = "Sesi Aç";
+            }
         }
     </script>
 
