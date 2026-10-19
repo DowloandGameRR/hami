@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Best Of Hami</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .btn-tikla {
+            background-color: #ff4757;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-tikla:hover {
+            background-color: #e84118;
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .main-title {
+            color: #2f3542;
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .word-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .word-list li {
+            font-size: 20px;
+            color: #57606f;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f2f6;
+            font-weight: 500;
+        }
+
+        .word-list li:last-child {
+            border-bottom: none;
+        }
+
+        .content-video {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Başlangıçtaki Tıkla Butonu -->
+        <button id="tiklaBtn" class="btn-tikla" onclick="icerikGoster()">Tıkla</button>
+
+        <!-- Tıklandıktan sonra açılacak içerik alanı -->
+        <div id="icerikAlani" class="hidden">
+            <h1 class="main-title">THE BEST OF HAMİ</h1>
+            
+            <ul class="word-list">
+                <li>Gözüm</li>
+                <li>Ortak</li>
+                <li>Çavuş</li>
+                <li>Curum</li>
+                <li>Tertip</li>
+                <li>Toprağım</li>
+                <li>Birader</li>
+                <li>Usta</li>
+                <li>Reis</li>
+                <li>Kral</li>
+                <li>Müdür</li>
+                <li>Gardaşım</li>
+                <li>Moruk</li>
+                <li>Şef</li>
+            </ul>
+
+            <!-- Video Alanı -->
+            <video id="medyaVideo" class="content-video" controls preload="auto">
+                <source src="video.mp4" type="video/mp4">
+                Tarayıcınız video etiketini desteklemiyor.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        function icerikGoster() {
+            // Butonu gizle
+            document.getElementById('tiklaBtn').style.display = 'none';
+
+            // İçerik alanını göster
+            document.getElementById('icerikAlani').classList.remove('hidden');
+
+            // Videoyu sesli olarak başlat
+            var video = document.getElementById('medyaVideo');
+            video.play().catch(function(error) {
+                console.log("Video otomatik başlatılamadı: ", error);
+            });
+        }
+    </script>
+
+</body>
+</html>
