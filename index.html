@@ -5,94 +5,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Best Of Hami</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
+            background-color: #000;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
+            overflow-x: hidden;
         }
 
-        .container {
-            text-align: center;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            width: 100%;
-        }
-
+        /* Başlangıç Tıkla Butonu */
         .btn-tikla {
+            position: relative;
+            z-index: 10;
             background-color: #ff4757;
             color: white;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-            padding: 15px 40px;
+            padding: 18px 50px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+            box-shadow: 0 5px 20px rgba(255, 71, 87, 0.6);
             transition: transform 0.2s, background-color 0.2s;
         }
 
         .btn-tikla:hover {
             background-color: #e84118;
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
         .hidden {
-            display: none;
+            display: none !important;
+        }
+
+        /* Arkaplan Video Ayarları */
+        #bgVideo {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 1;
+            object-fit: cover; /* Ekranı tam kaplaması için */
+        }
+
+        /* Videonun üzerindeki karartma katmanı (Yazıların okunması için) */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 2;
+        }
+
+        /* Video Üstündeki Yazı Alanı */
+        .content-container {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: #ffffff;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .main-title {
-            color: #2f3542;
-            font-size: 32px;
+            font-size: 36px;
             margin-bottom: 20px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            color: #ff4757;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
         }
 
         .word-list {
             list-style: none;
             padding: 0;
-            margin: 20px 0;
+            margin: 0;
         }
 
         .word-list li {
-            font-size: 20px;
-            color: #57606f;
-            padding: 8px 0;
-            border-bottom: 1px solid #f1f2f6;
-            font-weight: 500;
+            font-size: 22px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.9);
         }
 
         .word-list li:last-child {
             border-bottom: none;
         }
-
-        .content-video {
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Başlangıçtaki Tıkla Butonu -->
-        <button id="tiklaBtn" class="btn-tikla" onclick="icerikGoster()">Tıkla</button>
+    <!-- Başlangıç Butonu -->
+    <button id="tiklaBtn" class="btn-tikla" onclick="icerikGoster()">Tıkla</button>
 
-        <!-- Tıklandıktan sonra açılacak içerik alanı -->
-        <div id="icerikAlani" class="hidden">
+    <!-- Arkaplan Videosu (loop ekli) -->
+    <video id="bgVideo" class="hidden" loop preload="auto">
+        <source src="video.mp4" type="video/mp4">
+        Tarayıcınız video etiketini desteklemiyor.
+    </video>
+
+    <!-- Videonun Üstüne Gelecek Karartma ve Yazı Katmanı -->
+    <div id="icerikAlani" class="hidden">
+        <div class="overlay"></div>
+        <div class="content-container">
             <h1 class="main-title">THE BEST OF HAMİ</h1>
             
             <ul class="word-list">
@@ -111,27 +150,24 @@
                 <li>Moruk</li>
                 <li>Şef</li>
             </ul>
-
-            <!-- Video Alanı -->
-            <video id="medyaVideo" class="content-video" controls preload="auto">
-                <source src="video.mp4" type="video/mp4">
-                Tarayıcınız video etiketini desteklemiyor.
-            </video>
         </div>
     </div>
 
     <script>
         function icerikGoster() {
             // Butonu gizle
-            document.getElementById('tiklaBtn').style.display = 'none';
+            document.getElementById('tiklaBtn').classList.add('hidden');
 
-            // İçerik alanını göster
-            document.getElementById('icerikAlani').classList.remove('hidden');
+            // Videoyu ve Yazı Alanını Göster
+            var video = document.getElementById('bgVideo');
+            var icerik = document.getElementById('icerikAlani');
 
-            // Videoyu sesli olarak başlat
-            var video = document.getElementById('medyaVideo');
+            video.classList.remove('hidden');
+            icerik.classList.remove('hidden');
+
+            // Videoyu sesli ve döngüsel başlat
             video.play().catch(function(error) {
-                console.log("Video otomatik başlatılamadı: ", error);
+                console.log("Video başlatılamadı: ", error);
             });
         }
     </script>
